@@ -8,7 +8,6 @@ import PostDetailArea from "@/pages/PostDetailArea";
 import PostEditArea from "@/pages/PostEditArea";
 import PostsArea from "@/pages/PostsArea";
 import Refresh from "@/pages/Refresh";
-import axios from "axios";
 
 //保存原来的push|replace方法
 var originPush = VueRouter.prototype.push;
@@ -69,23 +68,24 @@ const router = new VueRouter({
         {
           path: "posts",
           component: PostsArea,
-          meta: { keepAlive: true },
+          meta: { keepAlive: true }
         },
         //打开详情页时必须传递post的id
         {
           name: "user_post",
           path: "post/:id",
-          component: PostDetailArea
+          component: PostDetailArea,
+          meta: { keepAlive: true }
         },
         {
           path: "postedit",
           component: PostEditArea,
-          meta: { keepAlive: false },
+          meta: { keepAlive: true }
         },
         {
           path: "drafts",
           component: PostsArea,
-          meta: { keepAlive: false },
+          meta: { keepAlive: false }
         },
         {
           name: "draft",

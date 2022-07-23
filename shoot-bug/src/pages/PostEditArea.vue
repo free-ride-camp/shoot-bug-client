@@ -24,6 +24,7 @@
       <button @click="save">保存</button>
       <button @click="publish">发布</button>
       <button @click="setTimePublish">定时发布</button>
+      <button @click="back">返回</button>
     </div>
   </div>
 </template>
@@ -31,7 +32,6 @@
 <script>
 import Tag from "../components/Tag.vue";
 import MyQuillEditor from "../components/MyQuillEditor.vue";
-import axios from "axios";
 
 export default {
   name: "PostEdit",
@@ -42,8 +42,11 @@ export default {
         title: "",
         content: "",
         tagList: [],
-        lastEditTime:""
+        lastEditTime: "",
       },
+      tempPath: "",
+      tempQuery:"",
+      tempParams:""
     };
   },
   components: {
@@ -62,7 +65,7 @@ export default {
       return false;
     },
     save() {
-      axios
+      this.$addr
         .post("/api/article/save", this.article)
         .then((resp) => {
           if (resp.data.code === 200) {
@@ -74,7 +77,7 @@ export default {
         });
     },
     publish() {
-      axios
+      this.$addr
         .post("/api/article/publish", this.article)
         .then((resp) => {
           if (resp.data.code === 200) {
@@ -86,20 +89,24 @@ export default {
         });
     },
     setTimePublish() {},
+    back() {
+      this.$router.back();
+    },
   },
   mounted() {
     let container = this.$refs.contentEditor.$el.querySelector(".ql-container");
     container.style.height = "600px";
+    console.log(this.tempPath);
   },
-  beforeRouteEnter (to, from, next) {
-    console.log(to.params);
-    if(Object.keys(to.params).length > 0){
-      next((vm)=>{
-        vm.article = to.params.data
-      })
-    }
-    else next();
-  }
+  beforeRouteEnter(to, from, next) {
+    console.log(from);
+    if (Object.keys(to.params).length > 0) {
+      next((vm) => {
+        vm.article = to.params.data;
+      });
+    } else
+      next();
+  },
 };
 </script>
 

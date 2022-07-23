@@ -29,10 +29,10 @@
 
 <script>
 import Floor from "../components/Floor.vue";
-import axios from "axios";
 import MyQuillEditor from "../components/MyQuillEditor.vue";
 import { nanoid } from "nanoid";
 import time from "time-formater";
+import request from '../config/request';
 
 export default {
   components: {
@@ -54,7 +54,7 @@ export default {
     handleCurrentChange(val) {
       this.currentPage = val;
 
-      axios
+      this.$addr
         .get(`/api/floor?id=${this.id}&page=${val}`)
         .then((resp) => {
           if (resp.data.code === 200) {
@@ -105,7 +105,7 @@ export default {
         "nick-name": "新来的",
       };
       //先发送post请求让数据库添加这一条数据
-      axios.post("/api/floor/add?id=" + this.id, newInfo)
+      this.$addr.post("/api/floor/add?id=" + this.id, newInfo)
       .then((resp)=>{
         if (resp.data.code === 200) {
           console.log('refresh');
@@ -120,7 +120,7 @@ export default {
     },
   },
   mounted() {
-    axios.get(`/api/floor?id=${this.id}&page=${this.currentPage}`).then((resp) => {
+    this.$addr.get(`/api/floor?id=${this.id}&page=${this.currentPage}`).then((resp) => {
       if (resp.data.code === 200) {
         this.floorList = resp.data.data;
       }
@@ -130,7 +130,7 @@ export default {
     // 如果是从帖子浏览区跳转进来，就请求获取一页多少组数据，有多少页
     if (from.path.indexOf("/posts") > -1) {
       console.log('entered post detail');
-      axios
+      request
         .get(`/api/floors?id=${to.params.id}`)
         .then((resp) => {
           if (resp.data.code === 200) {
@@ -147,7 +147,7 @@ export default {
         });
     }
     else if (from.path.indexOf('/refresh') > -1) {
-      axios
+      request
         .get(`/api/floors?id=${to.params.id}`)
         .then((resp) => {
           if (resp.data.code === 200) {
@@ -164,13 +164,26 @@ export default {
           });
         });
     }
+    else if (from.path.indexOf('/postedit')) {
+      request
+        .get(`/api/floors?id=${to.params.id}`)
+        .then((resp) => {
+          if (resp.data.code === 200) {
+            return resp.data.data;
+          } else return new Error("network err!");
+        })
+        .then((data) => {
+          next((vm) => {
+            vm.id = to.params.id;
+            vm.title = to.query.title;
+            vm.pageCount = data.pages;
+            vm.limited = data.limited;
+          });
+        });
+    }
     else {
       next();
     }
-  },
-  beforeRouteLeave (to, from, next) {
-    console.log(to,from);
-    next();
   }
 };
 </script>

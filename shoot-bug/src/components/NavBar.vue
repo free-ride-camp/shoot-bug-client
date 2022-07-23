@@ -13,6 +13,8 @@
           <a href="#" @click="showLogin">登录</a>
           |
           <a href="#" @click="showRegister">注册</a>
+          |
+          <a href="#" @click="logOut">退出登录</a>
         </div>
       </div>
     </div>
@@ -36,6 +38,10 @@ export default {
       this.$store.commit("hideLogin");
       this.$store.commit("showRegister");
     },
+    logOut(){
+      this.$store.commit("setUserInfo",{});
+      this.$router.replace('/index/posts')
+    }
   },
 };
 </script>

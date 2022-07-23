@@ -43,11 +43,6 @@ export default {
   },
   mounted() {
     this.$router.push({ path: "/index/posts" });
-    // axios.get("/api/postdescs/pagesizes?size=10").then((resp) => {
-    //   if (resp.data.code === 200) {
-    //     store.setPostDescPageSize(resp.data.data);
-    //   }
-    // });
   },
   methods: {
     hide(){

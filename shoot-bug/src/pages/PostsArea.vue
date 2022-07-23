@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import axios from "axios";
 import PostItem from "../components/PostItem.vue";
+import request from '../config/request';
 
 export default {
   data() {
@@ -36,7 +36,7 @@ export default {
         url = `/api/draftdescs?page=${val}`;
       }
 
-      axios.get(url).then((resp) => {
+      this.$addr.get(url).then((resp) => {
         if (resp.data.code === 200) {
           this.postList = resp.data.data;
         }
@@ -51,7 +51,7 @@ export default {
   mounted(){
     if (this.$route.path.indexOf('/posts') > -1) {
       console.log('/posts')
-      axios
+      this.$addr
       .get("/api/postdescs?page=1")
       .then((resp) => {
         if (resp.data.code == 200) {
@@ -64,7 +64,7 @@ export default {
     }
     else if (this.$route.path.indexOf('/drafts') > -1) {
       console.log('/drafts')
-      axios
+      this.$addr
       .get("/api/draftdescs?page=1")
       .then((resp) => {
         if (resp.data.code == 200) {
@@ -81,7 +81,7 @@ export default {
     if (
       to.path.indexOf("/posts") > -1
     ) {
-      axios
+      request
         .get("/api/posts/pagecount")
         .then((resp) => {
           if (resp.data.code === 200) {
@@ -96,7 +96,7 @@ export default {
     } else if (
       to.path.indexOf("/user/drafts") > -1
     ) {
-      axios
+      request
         .get("/api/drafts/pagecount")
         .then((resp) => {
           if (resp.data.code === 200) {

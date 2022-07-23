@@ -6,6 +6,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import store from './store/index';
 import '@/mock/mock_server';  //执行mock_server里的代码
+import request from './config/request';
 
 Vue.config.productionTip = false
 
@@ -18,5 +19,6 @@ const vm = new Vue({
   store,
   beforeCreate(){
     Vue.prototype.$bus = this;
+    Vue.prototype.$addr = request
   }
 }).$mount('#app')

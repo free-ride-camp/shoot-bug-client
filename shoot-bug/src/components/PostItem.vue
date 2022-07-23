@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -61,28 +60,28 @@ export default {
       this.mouseIn = false;
     },
     seeDetail() {
-      console.log(this.$route.path,this.postInfo.id);
-      let index = this.$route.path.indexOf("/posts")
+      console.log(this.$route.path, this.postInfo.id);
+      let index = this.$route.path.indexOf("/posts");
       if (index > -1) {
         // console.log(this.$route.path.substring(0,index) + '/post/' + this.postInfo.id);
         this.$router.push({
-          path: this.$route.path.substring(0,index) + '/post/' + this.postInfo.id,
+          path:
+            this.$route.path.substring(0, index) + "/post/" + this.postInfo.id,
           query: { title: this.postInfo.title },
         });
       } else if (this.$route.path.indexOf("/user/drafts") > -1) {
         //发送请求获取该draftdesc的详细信息
-        axios
+        this.$addr
           .get(`/api/draft?id=${this.postInfo.id}`)
           .then((resp) => {
             if (resp.data.code === 200) {
               return resp.data.data;
-            }
-            else return new Error('网络错误',resp.data.code)
+            } else return new Error("网络错误", resp.data.code);
           })
           .then((data) => {
             //切换路由到内容编辑区，给内容编辑区赋初始值
             this.$router.push({ name: "draft", params: { data } });
-            this.$bus.$emit('hideAside');
+            this.$bus.$emit("hideAside");
           })
           .catch((err) => {
             console.error(err);

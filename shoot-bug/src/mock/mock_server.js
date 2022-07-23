@@ -8,6 +8,7 @@ import floors1 from "./floors1.json";
 import floors2 from "./floors2.json";
 import draftDescList1 from './draftDescList1.json';
 import draftDetail1 from './draftDetail1.json';
+import user from './User.json';
 
 let Result = {
   code: 200,
@@ -75,5 +76,10 @@ Mock.mock('/api/draft?id=djfh1d5f3d2d5f41','get',()=>{
 Mock.mock('/login','post',(data)=>{
   console.log(data);
   Result.data = 'ewoibmFtZSI6InpoYW5nc2FuIiwKInBhc3N3b3JkIjoiMTIzNDU2Igp9'
+  return Result
+})
+
+Mock.mock('/register','post',(data)=>{
+  Result.data = user
   return Result
 })

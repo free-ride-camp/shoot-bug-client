@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import base64 from 'base64-js';
 
 export default {
@@ -28,7 +27,7 @@ export default {
       this.$router.replace("/root");
     },
     login(){
-      // axios.post('/login',{
+      // this.$addr.post('/login',{
       //   name:'zhangsan',
       //   password:'123456'
       // })
