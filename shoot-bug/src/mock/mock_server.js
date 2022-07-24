@@ -74,12 +74,16 @@ Mock.mock('/api/draft?id=djfh1d5f3d2d5f41','get',()=>{
 })
 
 Mock.mock('/login','post',(data)=>{
-  console.log(data);
-  Result.data = 'ewoibmFtZSI6InpoYW5nc2FuIiwKInBhc3N3b3JkIjoiMTIzNDU2Igp9'
+  // Result.data = 'ewoibmFtZSI6InpoYW5nc2FuIiwKInBhc3N3b3JkIjoiMTIzNDU2Igp9'
+  Result.data = user  
   return Result
 })
 
 Mock.mock('/register','post',(data)=>{
   Result.data = user
+  return Result
+})
+
+Mock.mock('/codecreate','get',(data)=>{
   return Result
 })

@@ -76,7 +76,7 @@
             v-model="verify_code"
             @blur="codeCheck"
           />
-          <button style="flex: 3">获取验证码</button>
+          <button style="flex: 3" @click="getCode" ref="getCodeBtn">获取验证码{{secends}}</button>
         </div>
         <p v-show="code_err">{{ code_err }}</p>
       </div>
@@ -88,7 +88,7 @@
           id="agreement"
           v-model="agreed"
         />
-        我已阅读并同意shoot-bug相关协议
+        <a href="#">我已阅读并同意shoot-bug相关协议</a>
       </p>
     </div>
     <div class="reg-area">
@@ -98,6 +98,7 @@
 </template>
 
 <script>
+import pub from '../public/index';
 
 export default {
   name: "register",
@@ -109,6 +110,7 @@ export default {
       password: "",
       re_password: "",
       verify_code: "",
+      secends:undefined,
       agreed: false,
       err_msg: undefined,
       name_err: undefined,
@@ -157,15 +159,42 @@ export default {
       }
     },
     emailCheck() {
-      let reg =
-        /[a-zA-Z0-9]+([-_.][A-Za-zd]+)*@([a-zA-Z0-9]+[-.])+[A-Za-zd]{2,5}$/;
-      if (reg.test(this.email)) {
+      if (pub.emailFormatCheck(this.email)) {
         this.email_err = undefined;
         return true;
       } else {
         this.email_err = "邮箱格式不合法，请检查后重新输入！";
         return false;
       }
+    },
+    getCode(){
+      //发送创建验证码请求
+      this.$addr.get('/codecreate',{
+        params:this.email
+      })
+      .then((resp)=>{
+        if (resp.status === 200) {
+          console.log('创建验证码成功');
+        }
+      })
+      .catch((err)=>{
+        console.error(err);
+      })
+
+      //开始一分钟倒计时
+      this.secends = 30;
+      let timer = setInterval(() => {
+        if (this.secends === 0) {
+          clearInterval(timer)
+          this.$refs.getCodeBtn.disabled = false
+          this.secends = undefined
+          return
+        }
+        this.secends--;
+      }, 1000);
+      //倒计时期间让按钮无法使用
+      console.dir(this.$refs.getCodeBtn);
+      this.$refs.getCodeBtn.disabled = true
     },
     register() {
       let noErr = true;
@@ -184,7 +213,6 @@ export default {
         return;
       }
 
-      console.log('start commit...');
       this.$addr.post('/register',{
         email:this.email,
         phone:this.phone,
@@ -216,11 +244,10 @@ export default {
                 default:
                     break;
             }
+            //更新头像和名字
+            this.$bus.$emit("setAvatar", userInfo.avatar_url);
         }
       })
-    },
-    bin2String(array) {
-      return String.fromCharCode.apply(String, array);
     }
   },
 };

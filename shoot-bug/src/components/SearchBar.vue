@@ -1,55 +1,54 @@
 <template>
-  <div id="search-bar">
-    <button @click="toVisitor">游客</button>
-    <button @click="toUser">普通用户</button>
-    <button @click="toAuditor">审核员</button>
-    <button @click="toRoot">超级管理员</button>
-    <button @click="login">登录</button>
+  <div id="search-container">
+    <input
+      type="text"
+      class="search-bar"
+      placeholder="问题描述/关键词/标签"
+    />
+    <div class="search-icon">
+      <i class="el-icon-search"></i>
+    </div>
   </div>
 </template>
 
 <script>
-import base64 from 'base64-js';
-
 export default {
-  methods: {
-    toVisitor() {
-      this.$router.replace("/index/posts");
-      console.log(base64);
-    },
-    toUser() {
-      this.$router.replace("/user/posts");
-    },
-    toAuditor() {
-      this.$router.replace("/auditor");
-    },
-    toRoot() {
-      this.$router.replace("/root");
-    },
-    login(){
-      // this.$addr.post('/login',{
-      //   name:'zhangsan',
-      //   password:'123456'
-      // })
-      // .then((resp)=>{
-      //   // console.log(resp);
-      //   console.log(resp.data.data);
-      //   const res = base64.toByteArray(resp.data.data)
-      //   console.log('res',this.bin2String(res));
-      // })
-      // .catch((err)=>{
-      //   console.error(err);
-      // })
-      
-    },
-    bin2String(array) {
-      return String.fromCharCode.apply(String, array);
-    }
-  },
+  methods: {},
 };
 </script>
 
 <style scoped>
-#search-bar {
+#search-container {
+  width: 100%;
+  height: 100%;
+  border: 1px solid green;
+  padding: 4px 8px;
+  box-sizing: border-box;
+  display: flex;
 }
+
+.search-bar {
+  flex: 9.5;
+  border: 1px solid orangered;
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+  padding-left: 16px;
+  outline: none;
+}
+
+.search-icon {
+  flex: 0.5;
+  border: 1px solid purple;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.search-icon{
+  font-size: 20px;
+}
+
 </style>

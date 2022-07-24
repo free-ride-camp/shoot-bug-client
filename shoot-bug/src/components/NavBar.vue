@@ -1,20 +1,28 @@
 <template>
   <div id="nav-bar">
-    <img src="../assets/logo_tmp.png" alt="" id="nav-logo" />
+    <img src="../assets/logo1.png" alt="" id="nav-logo" />
+    <p class="logo-name">Shoot Bug</p>
     <div class="nav-container">
       <div class="search">
-        <!-- <search-bar/> -->
+        <search-bar/>
       </div>
       <div class="user-control">
         <div class="avatar">
-          <el-avatar icon="el-icon-user-solid"></el-avatar>
+          <el-avatar icon="el-icon-user-solid" size="small" :src="avatar_url"></el-avatar>
         </div>
         <div class="login-register">
-          <a href="#" @click="showLogin">登录</a>
-          |
-          <a href="#" @click="showRegister">注册</a>
+          <div style="float: left" v-show="!logined">
+            <a href="#" @click="showLogin">登录</a>
+            |
+            <a href="#" @click="showRegister">注册</a>
+          </div>
+          <div style="float: left" v-show="logined">
+            <a href="#">{{ userName }}</a>
+          </div>
+          <div style="float:left" v-show="logined">
           |
           <a href="#" @click="logOut">退出登录</a>
+          </div>
         </div>
       </div>
     </div>
@@ -26,6 +34,12 @@ import SearchBar from "@/components/SearchBar.vue";
 
 export default {
   name: "NavBar",
+  data() {
+    return {
+      avatar_url: "",
+      logined: false,
+    };
+  },
   components: {
     SearchBar,
   },
@@ -38,10 +52,31 @@ export default {
       this.$store.commit("hideLogin");
       this.$store.commit("showRegister");
     },
-    logOut(){
-      this.$store.commit("setUserInfo",{});
-      this.$router.replace('/index/posts')
-    }
+    logOut() {
+      this.$store.commit("setUserInfo", {});
+      this.$router.replace("/index/posts");
+      this.$bus.$emit('unSetAvatar')
+    },
+  },
+  computed: {
+    userName() {
+      return this.$store.state.userInfo.name;
+    },
+  },
+  mounted() {
+    this.$bus.$on("setAvatar", (url) => {
+      // this.$refs.avatar.src = url;
+      this.avatar_url = url;
+      this.logined = true;
+    });
+    this.$bus.$on("unSetAvatar", () => {
+      this.avatar_url = undefined;
+      this.logined = false;
+    });
+    // console.log('nav-bar mounted');
+  },
+  beforeDestroy() {
+    this.$bus.$off("setAvatar");
   },
 };
 </script>
@@ -59,11 +94,20 @@ export default {
 }
 
 #nav-logo {
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   position: absolute;
+  margin: auto;
   left: 30px;
-  top: 8px;
+  top: 0;
+  bottom: 0;
+}
+
+.logo-name{
+  margin-left: 75px;
+  font-size: 24px;
+  margin-top: 13px;
+  margin-bottom: 0;
 }
 
 .nav-container {
@@ -98,15 +142,15 @@ export default {
 
 .avatar {
   position: absolute;
-  margin: auto 2px;
-  top: 2px;
+  margin: auto 4px;
+  top: 9px;
   bottom: 0;
 }
 
 .login-register {
   height: 100%;
   box-sizing: border-box;
-  margin-left: 50px;
+  margin-left: 40px;
   line-height: 40px;
 }
 </style>
