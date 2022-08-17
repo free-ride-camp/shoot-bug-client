@@ -3,17 +3,42 @@
     <input
       type="text"
       class="search-bar"
-      placeholder="问题描述/关键词/标签"
+      placeholder="[:标签1,标签2...] 内容"
+      v-model="content"
     />
     <div class="search-icon">
-      <i class="el-icon-search"></i>
+      <i class="el-icon-search" @click="search"></i>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  methods: {},
+  name:'SearchBar',
+  data() {
+    return {
+      content:''
+    }
+  },
+  methods: {
+    search(){
+      if (this.content.startsWith(':')) {
+        let tags = this.content.split(' ')[0]
+        let keyWords = this.content.substring(this.content.indexOf(' ')+1)
+
+        this.$addr.get('/api/search',{
+          params:{
+            tags,keyWords
+          }
+        })
+        .then((resp)=>{
+          if (resp.status === 200) {
+            console.log(resp.data.data);
+          }
+        })
+      }
+    }
+  },
 };
 </script>
 
