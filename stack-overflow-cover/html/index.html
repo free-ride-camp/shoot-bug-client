@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>shoot-bug</title>
-    <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../css/public.css">
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
-    />
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
     <style>
-        .header{
+        :root {
+            --day-bg-color: #fff;
+            --day-color: #000;
+            --night-bg-color: #1b1b1b;
+            --night-color: #fff;
+            --mode-bg-color: var(--day-bg-color);
+            --mode-front-color: var(--day-color);
+        }
+
+        .header {
             width: 100%;
             height: 50px;
             box-sizing: border-box;
             /* 橙红色 */
             border-top: 3px solid #FF4500;
-            position: fixed; 
+            background-color: var(--mode-bg-color);
+            position: fixed;
             z-index: 10000;
             box-shadow: 1px 0px 4px #888;
             display: flex;
             justify-content: center;
         }
 
-        .header-container{
-            width: 1250px;
+        .header-container {
+            width: 80%;
             height: 100%;
             box-sizing: border-box;
             display: flex;
@@ -35,7 +43,7 @@
             align-items: stretch;
         }
 
-        .header-logo{
+        .header-logo {
             width: 150px;
             /* 占用主轴固定150px的空间 */
             flex-basis: 150px;
@@ -50,19 +58,19 @@
             top: -33px;
         }
 
-        .header-search{
+        .header-search {
             flex: 7.5;
             position: relative;
             display: flex;
         }
 
-        .header-content{
+        .header-content {
             flex: 2.5;
             display: flex;
         }
 
-        #search-bar{
-            margin:auto 10px;
+        #search-bar {
+            margin: auto 10px;
             border: 1px solid #DCDCDC;
             padding: 2px 2px 2px 32px;
             height: 24px;
@@ -70,26 +78,26 @@
             outline: none;
         }
 
-        #search-bar:focus{
+        #search-bar:focus {
             border: 1px solid#DCDCDC;
-            box-shadow: 1px 1px 8px #C0C0C0,-1px -1px 8px #C0C0C0;
+            box-shadow: 1px 1px 8px #C0C0C0, -1px -1px 8px #C0C0C0;
         }
 
-        .icon-search{
+        .icon-search {
             position: absolute;
             font-size: 18px;
             left: 18px;
             top: 14px;
         }
 
-        .header-user{
+        .header-user {
             display: flex;
             align-items: center;
             flex: 2;
             margin-left: 4px;
         }
 
-        .content-item{
+        .content-item {
             flex: 1;
             display: flex;
             align-items: center;
@@ -97,12 +105,16 @@
             font-size: 20px;
         }
 
-        .content-item:hover{
+        .content-item>i {
+            color: var(--mode-front-color);
+        }
+
+        .content-item:hover {
             cursor: pointer;
             background-color: #D3D3D3;
         }
 
-        .null-avatar{
+        .null-avatar {
             width: 32px;
             height: 32px;
             display: flex;
@@ -111,47 +123,53 @@
             cursor: pointer;
         }
 
-        .main-area{
+        .main-area {
             width: 1250px;
             height: fit-content;
             box-sizing: border-box;
             margin: 50px auto 0;
         }
 
-        .main-aside{
+        .main-aside {
             display: flex;
             flex-direction: column;
             width: 180px;
-            height: 600px;
+            height: 510px;
             position: fixed;
             top: 70px;
             left: 160px;
+            background-color: var(--mode-bg-color);
             /* border-right: 1px solid #D6D9DC; */
         }
 
-        .special-btn{
+        .special-btn {
             flex: 1;
             display: flex;
             border-right: 1px solid #E6E6E6;
         }
 
-        .special-btn button{
+        .special-btn button {
             margin: 8px 20px;
             flex-grow: 1;
-            background-color:#1E90FF;
+            background-color: #1E90FF;
             color: #fff;
             border-radius: 4px;
             border: 1px solid #fff;
             cursor: pointer;
         }
-        
-        .aside-container{
+
+        .aside-container {
             flex: 9;
             padding-top: 20px;
+            background-color: var(--mode-bg-color);
         }
 
-        .content{
-            width: 70%;
+        .el-menu-item{
+            color: var(--mode-front-color);
+        }
+
+        .content {
+            width: 65%;
             min-height: 600px;
             height: fit-content;
             /* position: absolute; */
@@ -162,21 +180,21 @@
             display: flex;
         }
 
-        .center-container{
+        .center-container {
             flex-grow: 1;
             height: fit-content;
             padding-right: 16px;
         }
 
-        .edge-container{
-            flex-basis: 25rem;
+        .edge-container {
+            flex-basis: 30rem;
         }
 
         .is-active {
             border-right: 2px solid #FF4500;
         }
 
-        .ques-desc{
+        .ques-desc {
             width: 100%;
             height: 60px;
             box-sizing: border-box;
@@ -190,52 +208,56 @@
             font-size: 24px;
             font-weight: bold;
             line-height: 30px;
+            color: var(--mode-front-color);
+            background-color:var(--mode-bg-color);
         }
 
-        .filter-container{
+        .filter-container {
             width: fit-content;
             display: inline-block;
             height: 32px;
             margin: 30px 16px;
         }
 
-        .filter-container>div{
+        .filter-container>div {
             width: fit-content;
             height: 100%;
             box-sizing: border-box;
             font-size: 12px;
             float: left;
             padding: 0 10px;
-            border:1px solid black;
+            border: 1px solid var(--mode-front-color);
+            color: var(--mode-front-color);
             border-left: 0;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .filter-container>div:hover{
+        .filter-container>div:hover {
             cursor: pointer;
-            background-color: #F8F9F9;
+            background-color: #34ca34;
         }
 
-        .filter-container>div:first-child{
-            border-left: 1px solid black;
+        .filter-container>div:first-child {
+            border-left: 1px solid var(--mode-front-color);
             border-top-left-radius: 4px;
             border-bottom-left-radius: 4px;
         }
 
         .filter-active {
-            background-color: #E3E6E8;
+            background-color: #70b1dc;
         }
 
-        .filter-container>div:last-child{
+        .filter-container>div:last-child {
             border-top-right-radius: 4px;
             border-bottom-right-radius: 4px;
         }
 
-        #custom-filter{
+        #custom-filter {
             float: right;
-            border: 1px solid black;
+            border: 1px solid var(--mode-front-color);
+            color: var(--mode-front-color);
             border-radius: 4px;
             margin: 30px 16px;
             padding: 0 10px;
@@ -246,12 +268,12 @@
             height: 32px;
         }
 
-        .posts-container{
+        .posts-container {
             height: fit-content;
             width: 100%;
         }
 
-        .post-item{
+        .post-item {
             width: 100%;
             min-height: 147px;
             height: fit-content;
@@ -261,15 +283,15 @@
             border-top: 1px solid #E6E6E6;
         }
 
-        .post-summary-status{
-            flex: 1.5;
+        .post-summary-status {
+            flex: 1;
         }
 
-        .post-summary-content{
-            flex: 8.5;
+        .post-summary-content {
+            flex: 9;
         }
 
-        .post-summary-status{
+        .post-summary-status {
             padding-right: 30px;
             display: flex;
             flex-direction: column;
@@ -277,12 +299,12 @@
             align-items: flex-end;
         }
 
-        .post-summary-status-item{
+        .post-summary-status-item {
             font-size: 12px;
             color: #808080;
         }
 
-        .content-title{
+        .content-title {
             margin: 5px 0;
             font-size: 17px;
             font-weight: 400;
@@ -294,19 +316,19 @@
             text-overflow: ellipsis;
         }
 
-        .content-title>a{
+        .content-title>a {
             color: #0074CC;
             text-decoration: none;
         }
 
-        .content-title>a:hover{
+        .content-title>a:hover {
             color: #015ca1;
         }
 
-        .content-excerpt{
+        .content-excerpt {
             height: 34px;
             margin-bottom: 12px;
-            color: hsl(210, 8%, 25%);
+            color: var(--mode-front-color);
             font-size: 12px;
             overflow: hidden;
             display: -webkit-box;
@@ -315,7 +337,7 @@
             text-overflow: ellipsis;
         }
 
-        .post-cummary-meta{
+        .post-cummary-meta {
             width: 100%;
             box-sizing: border-box;
             height: fit-content;
@@ -323,13 +345,13 @@
             overflow: hidden;
         }
 
-        .meta-tags{
+        .meta-tags {
             float: left;
             width: fit-content;
             margin-left: 10px;
         }
 
-        .meta-user-card{
+        .meta-user-card {
             float: right;
             width: fit-content;
             height: 25px;
@@ -338,6 +360,7 @@
             justify-content: center;
             align-items: center;
             font-size: 12px;
+            color: var(--mode-front-color);
         }
 
         .meta-action {
@@ -348,7 +371,7 @@
             margin: 0 8px;
         }
 
-        .el-tag:hover{
+        .el-tag:hover {
             cursor: pointer;
         }
 
@@ -358,22 +381,25 @@
             margin: 20px auto;
         }
 
-        .card-header{
+        .card-header {
             font-size: 24px;
             font-weight: 800;
-            font-family: 'Microsoft YaHei','宋体';
+            font-family: 'Microsoft YaHei', '宋体';
         }
 
-        .footer-container{
+        .footer-container {
             width: 100%;
-            height: 150px;
+            height: 120px;
             background-color: #000;
             color: #D3D3D3;
             font-size: 32px;
         }
+        
+
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     <div id="app">
         <el-container>
             <header class="header">
@@ -391,44 +417,41 @@
 
                             </div>
                             <div v-else>
-                                <el-popover
-                                placement="bottom-start"
-                                title="点击头像登录"
-                                width="200"
-                                trigger="hover">
-                                <el-avatar class="null-avatar"  slot="reference">
-                                    <i class="el-icon-user-solid" style="font-size: 12px;"></i>
-                                </el-avatar>
-                                <slot>
-                                    如果您还没有注册，请点<a href="script:;">这里</a>
-                                </slot>
-                              </el-popover>
+                                <el-popover placement="bottom-start" title="点击头像登录" width="200" trigger="hover">
+                                    <el-avatar class="null-avatar" slot="reference">
+                                        <i class="el-icon-user-solid" style="font-size: 12px;"></i>
+                                    </el-avatar>
+                                    <slot>
+                                        如果您还没有注册，请点<a href="script:;">这里</a>
+                                    </slot>
+                                </el-popover>
                             </div>
                         </div>
 
-                        <el-tooltip effect="dark" content="点击切换日间/夜间模式" placement="bottom-start">
+                        <el-tooltip effect="dark" content="消息盒" placement="bottom-start">
                             <div class="header-inbox content-item">
-                                <i  class="el-icon-sunny"></i>
-                              </div>
-                          </el-tooltip>
+                                <i class="el-icon-receiving"></i>
+                            </div>
+                        </el-tooltip>
 
-                          <el-tooltip effect="dark" content="消息盒" placement="bottom-start">
-                            <div class="header-inbox content-item">
-                                <i  class="el-icon-receiving"></i>
-                              </div>
-                          </el-tooltip>
-
-                          <el-tooltip effect="dark" content="最近获得的荣誉" placement="bottom-start">
+                        <el-tooltip effect="dark" content="最近获得的荣誉" placement="bottom-start">
                             <div class="header-earned content-item">
                                 <i class="el-icon-trophy"></i>
                             </div>
-                          </el-tooltip>
+                        </el-tooltip>
 
-                          <el-tooltip effect="dark" content="帮助中心" placement="bottom-start">
-                            <div class="header-help content-item">
-                                <i class="el-icon-question"></i>
+                        <el-tooltip effect="dark" content="点击切换日间/夜间模式" placement="bottom-start">
+                            <div class="header-inbox content-item" @click="changeMode">
+                                <i v-show="mode==='day'" class="el-icon-sunny"></i>
+                                <i v-show="mode==='night'" class="el-icon-moon"></i>
                             </div>
-                          </el-tooltip>
+                        </el-tooltip>
+
+                        <el-tooltip effect="dark" content="更多" placement="bottom-start">
+                            <div class="header-help content-item">
+                                <i class="el-icon-more-outline"></i>
+                            </div>
+                        </el-tooltip>
                     </div>
                 </div>
             </header>
@@ -441,34 +464,34 @@
                     <el-menu-item index="1">
                         <i class="el-icon-reading"></i>
                         <span slot="title">问题</span>
-                      </el-menu-item>
-                      <el-menu-item index="2">
+                    </el-menu-item>
+                    <el-menu-item index="2">
                         <i class="el-icon-collection-tag"></i>
                         <span slot="title">标签</span>
-                      </el-menu-item>
-                      <el-menu-item index="3">
+                    </el-menu-item>
+                    <el-menu-item index="3">
                         <i class="el-icon-user"></i>
                         <span slot="title">用户</span>
-                      </el-menu-item>
-                      <el-menu-item index="4">
+                    </el-menu-item>
+                    <el-menu-item index="4">
                         <i class="el-icon-finished"></i>
                         <span slot="title">我的问题</span>
-                      </el-menu-item>
-                      <el-menu-item index="5">
+                    </el-menu-item>
+                    <el-menu-item index="5">
                         <i class="el-icon-edit-outline"></i>
                         <span slot="title">我的草稿</span>
-                      </el-menu-item>
-                      <el-menu-item index="6">
+                    </el-menu-item>
+                    <el-menu-item index="6">
                         <i class="el-icon-time"></i>
                         <span slot="title">历史记录</span>
-                      </el-menu-item>
+                    </el-menu-item>
                 </el-menu>
             </div>
-                
+
             <div class="content">
                 <div class="center-container">
                     <div class="ques-desc">
-                        {{published + "," + tags + "," + bountied + "," + answered + "," + updated}}问题
+                        {{published + tags + bountied + answered + updated}}问题
                     </div>
                     <div class="filter-container">
                         <div class="filter-active">最近发布的</div>
@@ -498,8 +521,8 @@
                             <div class="post-summary-content">
                                 <h3 class="content-title">
                                     <a href="#">积分尼克斯南方肯德基不服输的积分可能是减肥年开始放假脑
-                                    手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
-                                    栓康复你什么大姐夫你设计费你</a>
+                                        手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
+                                        栓康复你什么大姐夫你设计费你</a>
                                 </h3>
                                 <div class="content-excerpt">
                                     今年福克斯南方科技是南方少年开发了十多年疯狂世界能否看上你罚款近三年罚款近三年罚
@@ -515,7 +538,7 @@
                                     <div class="meta-user-card">
                                         <div class="meta-who">
                                             <img src="../assets/avatars/0.jpg" alt="" width="12px" height="12px">
-                                            <span>Join Smith</span> 
+                                            <span>Join Smith</span>
                                         </div>
                                         <div class="meta-action">
                                             编辑过
@@ -545,8 +568,8 @@
                             <div class="post-summary-content">
                                 <h3 class="content-title">
                                     <a href="#">积分尼克斯南方肯德基不服输的积分可能是减肥年开始放假脑
-                                    手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
-                                    栓康复你什么大姐夫你设计费你</a>
+                                        手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
+                                        栓康复你什么大姐夫你设计费你</a>
                                 </h3>
                                 <div class="content-excerpt">
                                     今年福克斯南方科技是南方少年开发了十多年疯狂世界能否看上你罚款近三年罚款近三年罚
@@ -562,7 +585,7 @@
                                     <div class="meta-user-card">
                                         <div class="meta-who">
                                             <img src="../assets/avatars/0.jpg" alt="" width="12px" height="12px">
-                                            <span>Join Smith</span> 
+                                            <span>Join Smith</span>
                                         </div>
                                         <div class="meta-action">
                                             编辑过
@@ -573,7 +596,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><div class="post-item">
+                        </div>
+                        <div class="post-item">
                             <div class="post-summary-status">
                                 <div class="post-summary-status-item">
                                     <span class="post-summary-status-item-number">0</span>
@@ -591,8 +615,8 @@
                             <div class="post-summary-content">
                                 <h3 class="content-title">
                                     <a href="#">积分尼克斯南方肯德基不服输的积分可能是减肥年开始放假脑
-                                    手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
-                                    栓康复你什么大姐夫你设计费你</a>
+                                        手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
+                                        栓康复你什么大姐夫你设计费你</a>
                                 </h3>
                                 <div class="content-excerpt">
                                     今年福克斯南方科技是南方少年开发了十多年疯狂世界能否看上你罚款近三年罚款近三年罚
@@ -608,7 +632,7 @@
                                     <div class="meta-user-card">
                                         <div class="meta-who">
                                             <img src="../assets/avatars/0.jpg" alt="" width="12px" height="12px">
-                                            <span>Join Smith</span> 
+                                            <span>Join Smith</span>
                                         </div>
                                         <div class="meta-action">
                                             编辑过
@@ -619,7 +643,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><div class="post-item">
+                        </div>
+                        <div class="post-item">
                             <div class="post-summary-status">
                                 <div class="post-summary-status-item">
                                     <span class="post-summary-status-item-number">0</span>
@@ -637,8 +662,8 @@
                             <div class="post-summary-content">
                                 <h3 class="content-title">
                                     <a href="#">积分尼克斯南方肯德基不服输的积分可能是减肥年开始放假脑
-                                    手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
-                                    栓康复你什么大姐夫你设计费你</a>
+                                        手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
+                                        栓康复你什么大姐夫你设计费你</a>
                                 </h3>
                                 <div class="content-excerpt">
                                     今年福克斯南方科技是南方少年开发了十多年疯狂世界能否看上你罚款近三年罚款近三年罚
@@ -654,7 +679,7 @@
                                     <div class="meta-user-card">
                                         <div class="meta-who">
                                             <img src="../assets/avatars/0.jpg" alt="" width="12px" height="12px">
-                                            <span>Join Smith</span> 
+                                            <span>Join Smith</span>
                                         </div>
                                         <div class="meta-action">
                                             编辑过
@@ -665,7 +690,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><div class="post-item">
+                        </div>
+                        <div class="post-item">
                             <div class="post-summary-status">
                                 <div class="post-summary-status-item">
                                     <span class="post-summary-status-item-number">0</span>
@@ -683,8 +709,8 @@
                             <div class="post-summary-content">
                                 <h3 class="content-title">
                                     <a href="#">积分尼克斯南方肯德基不服输的积分可能是减肥年开始放假脑
-                                    手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
-                                    栓康复你什么大姐夫你设计费你</a>
+                                        手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
+                                        栓康复你什么大姐夫你设计费你</a>
                                 </h3>
                                 <div class="content-excerpt">
                                     今年福克斯南方科技是南方少年开发了十多年疯狂世界能否看上你罚款近三年罚款近三年罚
@@ -700,7 +726,7 @@
                                     <div class="meta-user-card">
                                         <div class="meta-who">
                                             <img src="../assets/avatars/0.jpg" alt="" width="12px" height="12px">
-                                            <span>Join Smith</span> 
+                                            <span>Join Smith</span>
                                         </div>
                                         <div class="meta-action">
                                             编辑过
@@ -711,7 +737,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><div class="post-item">
+                        </div>
+                        <div class="post-item">
                             <div class="post-summary-status">
                                 <div class="post-summary-status-item">
                                     <span class="post-summary-status-item-number">0</span>
@@ -729,8 +756,8 @@
                             <div class="post-summary-content">
                                 <h3 class="content-title">
                                     <a href="#">积分尼克斯南方肯德基不服输的积分可能是减肥年开始放假脑
-                                    手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
-                                    栓康复你什么大姐夫你设计费你</a>
+                                        手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
+                                        栓康复你什么大姐夫你设计费你</a>
                                 </h3>
                                 <div class="content-excerpt">
                                     今年福克斯南方科技是南方少年开发了十多年疯狂世界能否看上你罚款近三年罚款近三年罚
@@ -746,7 +773,7 @@
                                     <div class="meta-user-card">
                                         <div class="meta-who">
                                             <img src="../assets/avatars/0.jpg" alt="" width="12px" height="12px">
-                                            <span>Join Smith</span> 
+                                            <span>Join Smith</span>
                                         </div>
                                         <div class="meta-action">
                                             编辑过
@@ -757,7 +784,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><div class="post-item">
+                        </div>
+                        <div class="post-item">
                             <div class="post-summary-status">
                                 <div class="post-summary-status-item">
                                     <span class="post-summary-status-item-number">0</span>
@@ -775,8 +803,8 @@
                             <div class="post-summary-content">
                                 <h3 class="content-title">
                                     <a href="#">积分尼克斯南方肯德基不服输的积分可能是减肥年开始放假脑
-                                    手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
-                                    栓康复你什么大姐夫你设计费你</a>
+                                        手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
+                                        栓康复你什么大姐夫你设计费你</a>
                                 </h3>
                                 <div class="content-excerpt">
                                     今年福克斯南方科技是南方少年开发了十多年疯狂世界能否看上你罚款近三年罚款近三年罚
@@ -792,7 +820,7 @@
                                     <div class="meta-user-card">
                                         <div class="meta-who">
                                             <img src="../assets/avatars/0.jpg" alt="" width="12px" height="12px">
-                                            <span>Join Smith</span> 
+                                            <span>Join Smith</span>
                                         </div>
                                         <div class="meta-action">
                                             编辑过
@@ -803,7 +831,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><div class="post-item">
+                        </div>
+                        <div class="post-item">
                             <div class="post-summary-status">
                                 <div class="post-summary-status-item">
                                     <span class="post-summary-status-item-number">0</span>
@@ -821,8 +850,8 @@
                             <div class="post-summary-content">
                                 <h3 class="content-title">
                                     <a href="#">积分尼克斯南方肯德基不服输的积分可能是减肥年开始放假脑
-                                    手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
-                                    栓康复你什么大姐夫你设计费你</a>
+                                        手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
+                                        栓康复你什么大姐夫你设计费你</a>
                                 </h3>
                                 <div class="content-excerpt">
                                     今年福克斯南方科技是南方少年开发了十多年疯狂世界能否看上你罚款近三年罚款近三年罚
@@ -838,7 +867,7 @@
                                     <div class="meta-user-card">
                                         <div class="meta-who">
                                             <img src="../assets/avatars/0.jpg" alt="" width="12px" height="12px">
-                                            <span>Join Smith</span> 
+                                            <span>Join Smith</span>
                                         </div>
                                         <div class="meta-action">
                                             编辑过
@@ -849,7 +878,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><div class="post-item">
+                        </div>
+                        <div class="post-item">
                             <div class="post-summary-status">
                                 <div class="post-summary-status-item">
                                     <span class="post-summary-status-item-number">0</span>
@@ -867,8 +897,8 @@
                             <div class="post-summary-content">
                                 <h3 class="content-title">
                                     <a href="#">积分尼克斯南方肯德基不服输的积分可能是减肥年开始放假脑
-                                    手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
-                                    栓康复你什么大姐夫你设计费你</a>
+                                        手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
+                                        栓康复你什么大姐夫你设计费你</a>
                                 </h3>
                                 <div class="content-excerpt">
                                     今年福克斯南方科技是南方少年开发了十多年疯狂世界能否看上你罚款近三年罚款近三年罚
@@ -884,7 +914,7 @@
                                     <div class="meta-user-card">
                                         <div class="meta-who">
                                             <img src="../assets/avatars/0.jpg" alt="" width="12px" height="12px">
-                                            <span>Join Smith</span> 
+                                            <span>Join Smith</span>
                                         </div>
                                         <div class="meta-action">
                                             编辑过
@@ -895,7 +925,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><div class="post-item">
+                        </div>
+                        <div class="post-item">
                             <div class="post-summary-status">
                                 <div class="post-summary-status-item">
                                     <span class="post-summary-status-item-number">0</span>
@@ -913,8 +944,8 @@
                             <div class="post-summary-content">
                                 <h3 class="content-title">
                                     <a href="#">积分尼克斯南方肯德基不服输的积分可能是减肥年开始放假脑
-                                    手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
-                                    栓康复你什么大姐夫你设计费你</a>
+                                        手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
+                                        栓康复你什么大姐夫你设计费你</a>
                                 </h3>
                                 <div class="content-excerpt">
                                     今年福克斯南方科技是南方少年开发了十多年疯狂世界能否看上你罚款近三年罚款近三年罚
@@ -930,7 +961,7 @@
                                     <div class="meta-user-card">
                                         <div class="meta-who">
                                             <img src="../assets/avatars/0.jpg" alt="" width="12px" height="12px">
-                                            <span>Join Smith</span> 
+                                            <span>Join Smith</span>
                                         </div>
                                         <div class="meta-action">
                                             编辑过
@@ -941,7 +972,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><div class="post-item">
+                        </div>
+                        <div class="post-item">
                             <div class="post-summary-status">
                                 <div class="post-summary-status-item">
                                     <span class="post-summary-status-item-number">0</span>
@@ -959,8 +991,8 @@
                             <div class="post-summary-content">
                                 <h3 class="content-title">
                                     <a href="#">积分尼克斯南方肯德基不服输的积分可能是减肥年开始放假脑
-                                    手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
-                                    栓康复你什么大姐夫你设计费你</a>
+                                        手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
+                                        栓康复你什么大姐夫你设计费你</a>
                                 </h3>
                                 <div class="content-excerpt">
                                     今年福克斯南方科技是南方少年开发了十多年疯狂世界能否看上你罚款近三年罚款近三年罚
@@ -976,7 +1008,7 @@
                                     <div class="meta-user-card">
                                         <div class="meta-who">
                                             <img src="../assets/avatars/0.jpg" alt="" width="12px" height="12px">
-                                            <span>Join Smith</span> 
+                                            <span>Join Smith</span>
                                         </div>
                                         <div class="meta-action">
                                             编辑过
@@ -987,7 +1019,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><div class="post-item">
+                        </div>
+                        <div class="post-item">
                             <div class="post-summary-status">
                                 <div class="post-summary-status-item">
                                     <span class="post-summary-status-item-number">0</span>
@@ -1005,8 +1038,8 @@
                             <div class="post-summary-content">
                                 <h3 class="content-title">
                                     <a href="#">积分尼克斯南方肯德基不服输的积分可能是减肥年开始放假脑
-                                    手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
-                                    栓康复你什么大姐夫你设计费你</a>
+                                        手机放哪控释胶囊福克斯你快解放少女客服女生夹克您付款时间南方科技是鸟瞰世界能否
+                                        栓康复你什么大姐夫你设计费你</a>
                                 </h3>
                                 <div class="content-excerpt">
                                     今年福克斯南方科技是南方少年开发了十多年疯狂世界能否看上你罚款近三年罚款近三年罚
@@ -1022,7 +1055,7 @@
                                     <div class="meta-user-card">
                                         <div class="meta-who">
                                             <img src="../assets/avatars/0.jpg" alt="" width="12px" height="12px">
-                                            <span>Join Smith</span> 
+                                            <span>Join Smith</span>
                                         </div>
                                         <div class="meta-action">
                                             编辑过
@@ -1035,13 +1068,13 @@
                             </div>
                         </div>
 
-                        <el-pagination
-                            :current-page="1"
-                            :page-sizes="[100, 200, 300, 400]"
-                            :page-size="100"
-                            layout="total, sizes, prev, pager, next, jumper"
-                            :total="400"
-                            style="margin: 0 0 20px 16px;"    
+                        <el-pagination 
+                        :current-page="1" 
+                        :page-sizes="[100, 200, 300, 400]" 
+                        :page-size="100"
+                        layout="total, sizes, prev, pager, next, jumper" :total="400"
+                        style="margin: 20px 0 20px 16px;"
+                        background="true"
                         >
                         </el-pagination>
                     </div>
@@ -1049,7 +1082,7 @@
                 <div class="edge-container">
                     <el-card class="box-card">
                         <div slot="header" class="card-header">
-                          公告
+                            公告
                         </div>
                         <ul>
                             <li></li>
@@ -1057,31 +1090,31 @@
                             <li></li>
                             <li></li>
                         </ul>
-                      </el-card>
+                    </el-card>
 
-                      <el-card class="box-card">
+                    <el-card class="box-card">
                         <div slot="header" class="card-header">
-                          热门问题
+                            热门问题
                         </div>
-                      </el-card>
+                    </el-card>
 
-                      <el-card class="box-card">
+                    <el-card class="box-card">
                         <div slot="header" class="card-header">
-                          你想监听的标签
+                            你想监听的标签
                         </div>
-                      </el-card>
+                    </el-card>
 
-                      <el-card class="box-card">
+                    <el-card class="box-card">
                         <div slot="header" class="card-header">
-                          你想忽略的标签
+                            你想忽略的标签
                         </div>
-                      </el-card>
+                    </el-card>
 
                 </div>
             </div>
         </el-container>
 
-        
+
         <footer class="footer-container">
             这里是footer
         </footer>
@@ -1092,19 +1125,44 @@
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script>
         new Vue({
-      el: '#app',
-      data: function() {
-        return { 
-            logined:false,
-            tags:"标签:[JavaSCript,ECMAScript,CSS,HTML,DOM]的",
-            bountied: "具有赏金的",
-            answered: "未回答的",
-            updated: "最近更新的",
-            published:"最近发布的"
-        }
-      }
-    })
-  </script>
+            el: '#app',
+            data: function () {
+                return {
+                    logined: false,
+                    tags: "标签:[JavaSCript,ECMAScript,CSS,HTML,DOM]的",
+                    bountied: "具有赏金的,",
+                    answered: "未回答的,",
+                    updated: "最近更新的,",
+                    published: "最近发布的,",
+                    mode: 'day'
+                }
+            },
+            methods: {
+                changeMode() {
+                    if (this.mode === 'day') {
+                        this.mode = 'night'
+                    }
+                    else if (this.mode === 'night') {
+                        this.mode = 'day'
+                    }
+                }
+            },
+            watch: {
+                mode(newVal) {
+                    let style = document.documentElement.style
+                    if (newVal === 'day') {
+                        style.setProperty('--mode-bg-color', 'var(--day-bg-color)')
+                        style.setProperty('--mode-front-color', 'var(--day-color)')
+                    }
+                    else if (newVal === 'night') {
+                        style.setProperty('--mode-bg-color', 'var(--night-bg-color)')
+                        style.setProperty('--mode-front-color', 'var(--night-color)')
+                    }
+                }
+            },
+        })
     </script>
-  </body>
+    </script>
+</body>
+
 </html>

@@ -7,4 +7,5 @@ html,body{
 body{
     height: fit-content;
     position: relative;
+    background-color: var(--mode-bg-color);
 }
