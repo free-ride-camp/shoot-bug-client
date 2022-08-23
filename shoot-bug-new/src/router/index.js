@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 import Refresh from "@/pages/Refresh";
 import QuesPage from '../pages/QuesPage.vue';
 import TagsPage from '../pages/TagsPage.vue';
+import UsersPage from '../pages/UsersPage.vue';
+import NewQuesPage from '../pages/NewQuesPage.vue';
 
 //保存原来的push|replace方法
 var originPush = VueRouter.prototype.push;
@@ -39,7 +41,7 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   routes: [
     {
-      path: "/ques",
+      path: "/questions",
       component:QuesPage
     },
     {
@@ -47,11 +49,18 @@ const router = new VueRouter({
       component:TagsPage
     },
     {
+      path:'/users',
+      component:UsersPage
+    },
+    {
+      path:'/new',
+      component:NewQuesPage
+    },
+    {
       name: "refresh",
       path: "/refresh",
       component: Refresh,
-    },
-    
+    }
   ],
 });
 

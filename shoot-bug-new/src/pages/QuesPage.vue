@@ -189,11 +189,11 @@
       </el-card>
 
       <el-card class="box-card">
-        <div slot="header" class="card-header">你想监听的标签</div>
+        <div slot="header" class="card-header">监听的标签</div>
       </el-card>
 
       <el-card class="box-card">
-        <div slot="header" class="card-header">你想忽略的标签</div>
+        <div slot="header" class="card-header">忽略的标签</div>
       </el-card>
     </div>
   </div>

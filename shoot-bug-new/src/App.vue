@@ -71,7 +71,7 @@
 
       <div class="main-aside">
         <div class="special-btn">
-          <button>Ask Question</button>
+          <button @click="newQuestion">Ask Question</button>
         </div>
         <el-menu
           class="aside-container"
@@ -79,7 +79,7 @@
           background-color="var(--mode-bg-color)"
           router
         >
-          <el-menu-item index="ques">
+          <el-menu-item index="questions">
             <i class="el-icon-reading"></i>
             <span slot="title">问题</span>
           </el-menu-item>
@@ -87,17 +87,13 @@
             <i class="el-icon-collection-tag"></i>
             <span slot="title">标签</span>
           </el-menu-item>
-          <el-menu-item index="3">
+          <el-menu-item index="users">
             <i class="el-icon-user"></i>
             <span slot="title">用户</span>
           </el-menu-item>
-          <el-menu-item index="4">
+          <el-menu-item index="myquestions">
             <i class="el-icon-finished"></i>
             <span slot="title">我的问题</span>
-          </el-menu-item>
-          <el-menu-item index="5">
-            <i class="el-icon-edit-outline"></i>
-            <span slot="title">我的草稿</span>
           </el-menu-item>
           <el-menu-item index="6">
             <i class="el-icon-time"></i>
@@ -138,6 +134,9 @@ export default {
     },
     removeOutLine(){
       this.$refs['search-bar'].$el.classList.remove('search-bar-outline')
+    },
+    newQuestion(){
+      this.$router.push('/new')
     }
   },
   watch: {
@@ -153,7 +152,7 @@ export default {
     },
   },
   mounted() {
-    this.$router.replace({path:'/ques'})
+    this.$router.replace({path:'/users'})
   },
 };
 </script>

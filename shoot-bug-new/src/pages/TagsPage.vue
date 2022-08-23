@@ -8,6 +8,7 @@
                 <selector-group :group="group" />
             </div>
         </div>
+        <el-divider></el-divider>
         <div class="tags-part">
             <tag-card v-for="a in 25" :key="a" width="100%" height="100%"
                 tagName="Java"
@@ -16,6 +17,16 @@
                 todayAsked="100"
             />
         </div>
+        <el-pagination
+          :current-page="1"
+          :page-sizes="[100, 200, 300, 400]"
+          :page-size="100"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="400"
+          style="margin: 20px 0 20px 16px"
+          background
+        >
+        </el-pagination>
     </div>
 </template>
 
@@ -23,7 +34,8 @@
 import SearchBar from '../components/SearchBar.vue';
 import SelectorGroup from '../components/SelectorGroup.vue';
 import TagCard from '../components/TagCard.vue';
-
+//sof上的一些细节
+//当整体页面宽度变化时，grid布局会响应变化来自适应，目前还没实现
 export default {
     name:'TagsPage',
     components:{
