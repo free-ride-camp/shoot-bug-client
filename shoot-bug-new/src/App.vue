@@ -157,7 +157,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: 'Microsoft YaHei', '宋体';
   -webkit-font-smoothing: antialiased;

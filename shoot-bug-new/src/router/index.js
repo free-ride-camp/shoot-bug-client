@@ -5,7 +5,7 @@ import QuesPage from '../pages/QuesPage.vue';
 import TagsPage from '../pages/TagsPage.vue';
 import UsersPage from '../pages/UsersPage.vue';
 import NewQuesPage from '../pages/NewQuesPage.vue';
-import HistoryPage from '../pages/HistoryPage.vue';
+import MyQuesPage from '../pages/MyQuesPage.vue';
 
 //保存原来的push|replace方法
 var originPush = VueRouter.prototype.push;
@@ -58,8 +58,8 @@ const router = new VueRouter({
       component:NewQuesPage
     },
     {
-      path:'/history',
-      component:HistoryPage
+      path:'/myquestions',
+      component:MyQuesPage
     },
     {
       name: "refresh",

@@ -1,119 +1,121 @@
 <template>
-  <div class="content container">
-    <div class="title">
-      <div class="title-label-area">
-        <label for="title-edit"><a class="title-label">问题</a></label>
+  <div class="content" id="new-container">
+    <div class="ques-part">
+      <div class="title-container">
+        <h3>
+          <label
+            for="title-input"
+            title="请明确您的问题核心并注意问题表述是否符合右边提示的注意点"
+            >标题</label
+          >
+        </h3>
+        <el-autocomplete
+          v-model="title"
+          :fetch-suggestions="querySearchAsync"
+          placeholder="举例：如何在foreach方法中break或者continue?"
+        ></el-autocomplete>
       </div>
-      <div class="title-edit-area">
-        <input type="text" id="title-edit" />
+      <div class="desc-container">
+        <h3>描述</h3>
+        <div class="tiptap">
+          <Tiptap v-model="content" />
+        </div>
       </div>
     </div>
-    <div class="answer">
-      <my-quill-editor ref="contentEditor" />
-    </div>
-    <div class="tags" ref="tagArea">
-      
-    </div>
-    <div class="func">
-      
-    </div>
-
+    <div class="info-part"></div>
   </div>
 </template>
 
 <script>
-import MyQuillEditor from "../components/MyQuillEditor.vue";
+import Tiptap from "../components/Tiptap.vue";
 
 export default {
   name: "NewQuesPage",
   components: {
-    MyQuillEditor,
+    Tiptap,
   },
   data() {
-    return {};
+    return {
+      content: "",
+      title: "",
+    };
   },
   methods: {
-
+    querySearchAsync() {},
   },
 };
 </script>
 
 <style scoped>
-.container {
-  padding-left: 16px;
-  display: inline;
-}
-
-.title {
-  width: 96%;
-  height: 60px;
-  border: 1px solid black;
-  margin: 20px auto;
+#new-container {
   display: flex;
 }
 
-.title-label {
-  font-size: 32px;
-  font-weight: bold;
-  line-height: 60px;
-  text-decoration: none;
-  color: black;
-  cursor: default;
+.ques-part {
+  flex: 7.5;
+  border: 2px solid black;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px #888;
+  box-sizing: border-box;
+  margin: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
 }
 
-.title-label-area {
-  flex-basis: 100px;
-  text-align: center;
+.info-part {
+  flex: 2.5;
+  border: 2px solid black;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px #888;
+  box-sizing: border-box;
+  margin: 16px 0;
 }
 
-.title-edit-area {
-  height: max-content;
-  width: max-content;
-  flex:1;
+.title-container {
+  flex: 1.8;
 }
 
-#title-edit {
+.desc-container {
+  flex: 8.2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+h3 {
+  margin: 8px 0;
+}
+
+.desc-container h3 {
+  flex-basis: 1.17em;
+}
+
+.tiptap {
+  flex: 1;
+}
+
+div >>> .el-input__inner {
+  margin: 0;
+  padding: 0 4px;
+  box-sizing: border-box;
   width: 100%;
-  height: 60px;
-  box-sizing: border-box;
-  outline: none;
-  font-size: 32px;
-}
-
-.answer {
-  width: 96%;
-  height: fit-content;
-  border: 1px solid black;
-  margin: 20px auto;
-}
-
-.tags {
-  width: 96%;
-  min-height: 30px;
-  height: fit-content;
-  box-sizing: border-box;
-  border: 1px solid black;
-  margin: 20px auto;
-  padding: 5px;
-}
-
-.tag {
-  float: left;
-  margin-right: 50px;
-}
-
-.func {
-  width: 96%;
-  height: 60px;
-  border: 1px solid black;
-  margin: 20px auto;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.func > button {
-  width: 100px;
   height: 30px;
+  font-size: 16px;
+  line-height: 30px;
+  border: 0;
+  outline: none;
+}
+
+.el-autocomplete{
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 </style>
