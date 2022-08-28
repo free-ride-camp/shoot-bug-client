@@ -22,7 +22,7 @@ body {
 
 .content {
   width: 70%;
-  min-height: 600px;
+  min-height: 900px;
   height: fit-content;
   margin-top: 55px;
   margin-left: calc(160px + 180px);

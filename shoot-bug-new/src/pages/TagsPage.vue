@@ -10,7 +10,7 @@
         </div>
         <el-divider></el-divider>
         <div class="tags-part">
-            <tag-card v-for="a in 25" :key="a" width="100%" height="100%"
+            <tag-card v-for="a in 25" :key="a" width="250px" height="180px"
                 tagName="Java"
                 :tagDesc="tagDesc"
                 quesCount="20000"
@@ -66,10 +66,12 @@ export default {
 }
 
 .tags-part{
-    height: 960px;
+    width: 100%;
+    min-height: 960px;
+    height: fit-content;
     margin: 20px 0;
     display: grid;
-    grid-template-columns: repeat(5,1fr);
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
     grid-template-rows: repeat(5,1fr);
     grid-row-gap: 16px;
     grid-column-gap: 16px;

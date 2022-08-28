@@ -75,7 +75,7 @@
         </div>
         <el-menu
           class="aside-container"
-          default-active="ques"
+          default-active="questions"
           background-color="var(--mode-bg-color)"
           router
         >
@@ -95,7 +95,7 @@
             <i class="el-icon-finished"></i>
             <span slot="title">我的问题</span>
           </el-menu-item>
-          <el-menu-item index="6">
+          <el-menu-item index="history">
             <i class="el-icon-time"></i>
             <span slot="title">历史记录</span>
           </el-menu-item>
@@ -152,7 +152,7 @@ export default {
     },
   },
   mounted() {
-    this.$router.replace({path:'/users'})
+    this.$router.replace({path:'/questions'})
   },
 };
 </script>

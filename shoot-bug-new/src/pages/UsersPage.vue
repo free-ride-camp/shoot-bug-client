@@ -82,10 +82,12 @@ export default {
 }
 
 .users-part {
-  height: 900px;
+  width: 100%;
+  min-height: 900px;
+  height: fit-content;
   margin: 20px 0;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
   grid-template-rows: repeat(8, 1fr);
   grid-row-gap: 16px;
   grid-column-gap: 16px;
