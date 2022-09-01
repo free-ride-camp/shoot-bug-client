@@ -10,15 +10,36 @@
           >
         </h3>
         <el-autocomplete
-          v-model="title"
-          :fetch-suggestions="querySearchAsync"
+          v-model="quesQuery"
+          :fetch-suggestions="queryQuestionAsync"
           placeholder="举例：如何在foreach方法中break或者continue?"
+          :trigger-on-focus="false"
         ></el-autocomplete>
       </div>
       <div class="desc-container">
         <h3>描述</h3>
         <div class="tiptap">
           <Tiptap v-model="content" />
+        </div>
+      </div>
+      <div class="func-container">
+        <div class="tags-container">
+          <div class="suggest-input">
+            <el-autocomplete v-model="tagQuery"
+              :fetch-suggestions="queryTagAsync"
+              placeholder="输入标签名添加"
+              :trigger-on-focus="false"
+            />
+          </div>
+          <div class="tags">
+
+          </div>
+        </div>
+        <hr style="background:#ccc;width:100%;">
+        <div class="btns-container">
+          <button>清空</button>
+          <button>保存</button>
+          <button>发布</button>
         </div>
       </div>
     </div>
@@ -36,12 +57,21 @@ export default {
   },
   data() {
     return {
-      content: "",
-      title: "",
+      content:"",
+      quesQuery: "",
+      tagQuery:""
     };
   },
   methods: {
-    querySearchAsync() {},
+    queryQuestionAsync() {
+      console.log('get queryQuestionAsync');
+    },
+    queryTagAsync(){
+      console.log('get queryTagAsync');
+    },
+    test(){
+
+    }
   },
 };
 </script>
@@ -77,11 +107,11 @@ export default {
 }
 
 .title-container {
-  flex: 1.8;
+  flex: 1;
 }
 
 .desc-container {
-  flex: 8.2;
+  flex: 8;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -100,6 +130,40 @@ h3 {
   flex: 1;
 }
 
+.func-container{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  margin-top: 25px;
+}
+
+.tags-container{
+  height: 50px;
+  margin: 4px 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: stretch;
+}
+
+.btns-container{
+  height: 50px;
+  margin: 4px 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btns-container > button{
+  width: 90px;
+  height: 30px;
+  box-sizing: border-box;
+  font-size: 16px;
+  margin: auto 12px;
+}
+
 div >>> .el-input__inner {
   margin: 0;
   padding: 0 4px;
@@ -114,8 +178,16 @@ div >>> .el-input__inner {
 
 .el-autocomplete{
   width: 100%;
-  border: 2px solid black;
+  border: 1px solid black;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+.suggest-input{
+  flex: 2.5;
+}
+
+.tags{
+  flex: 7.5;
 }
 </style>

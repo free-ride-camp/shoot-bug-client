@@ -4,6 +4,10 @@
 
 ## 打算重构shoot-bug
 
+*2022-09-02*
+
+这段期间，在研究tiptap来代替vue-quill-editor，我自己从零封装了一个顺手的[编辑器](https://github.com/hlz2516/z-tiptap-editor)
+
 *2022-08-22*
 
 这段期间，我借鉴stack overflow的整体布局，再加上我自己的思考，打算重构shoot-bug，目前重构了问题和用户两个页面。

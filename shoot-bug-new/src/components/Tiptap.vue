@@ -181,10 +181,6 @@
       </bubble-menu>
       <editor-content :editor="editor" />
     </div>
-    <div class="footer-part">
-      <div class="footer-btn" @click="test">清空</div>
-      <div class="footer-btn">发送</div>
-    </div>
   </div>
 </template>
 
@@ -356,9 +352,32 @@ export default {
           class: "prose",
         },
       },
+      onUpdate:()=>{
+        this.$emit('input',this.editor.getHTML())
+      }
     });
   },
-
+  watch: {
+    value(value) {
+      // HTML
+      const isSame = this.editor.getHTML() === value
+ 
+      // JSON
+      // const isSame = JSON.stringify(this.editor.getJSON()) === JSON.stringify(value)
+ 
+      if (isSame) {
+        return
+      }
+ 
+      this.editor.commands.setContent(value, false)
+    },
+  },
+  props:{
+    value:{
+      type:String,
+      default:''
+    }
+  },
   beforeDestroy() {
     this.editor.destroy();
   },
@@ -478,27 +497,5 @@ div >>> .code-block {
   color: #fff;
   font-size: 14px;
   line-height: 18px;
-}
-
-.footer-part {
-  flex-basis: 50px;
-  width: 100%;
-  border-top: 2px solid black;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.footer-btn {
-  width: 60px;
-  height: 30px;
-  margin: 0 8px;
-  border: 1px solid black;
-  box-sizing: border-box;
-  border-radius: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
 }
 </style>

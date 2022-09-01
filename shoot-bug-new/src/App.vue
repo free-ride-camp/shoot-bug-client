@@ -269,7 +269,7 @@ body {
   height: 510px;
   position: fixed;
   top: 70px;
-  left: 160px;
+  left: 10%;
   background-color: var(--mode-bg-color);
   /* border-right: 1px solid #D6D9DC; */
 }
