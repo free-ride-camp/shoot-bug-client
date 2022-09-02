@@ -47,7 +47,7 @@
               <div class="meta-user-card">
                 <div class="meta-who">
                   <img
-                    src="../assets/avatars/0.jpg"
+                    src="../../assets/avatars/0.jpg"
                     alt=""
                     width="12px"
                     height="12px"
@@ -97,7 +97,7 @@
               <div class="meta-user-card">
                 <div class="meta-who">
                   <img
-                    src="../assets/avatars/0.jpg"
+                    src="../../assets/avatars/0.jpg"
                     alt=""
                     width="12px"
                     height="12px"
@@ -147,7 +147,7 @@
               <div class="meta-user-card">
                 <div class="meta-who">
                   <img
-                    src="../assets/avatars/0.jpg"
+                    src="../../assets/avatars/0.jpg"
                     alt=""
                     width="12px"
                     height="12px"
@@ -200,7 +200,7 @@
 </template>
 
 <script>
-import SelectorGroup from '../components/SelectorGroup.vue';
+import SelectorGroup from '../../components/SelectorGroup.vue';
 
 export default {
   name: "QuesPage",

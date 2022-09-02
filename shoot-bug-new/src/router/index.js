@@ -1,11 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Refresh from "@/pages/Refresh";
-import QuesPage from '../pages/QuesPage.vue';
-import TagsPage from '../pages/TagsPage.vue';
-import UsersPage from '../pages/UsersPage.vue';
-import NewQuesPage from '../pages/NewQuesPage.vue';
-import MyQuesPage from '../pages/MyQuesPage.vue';
+import QuesPage from '../pages/UserPages/QuesPage.vue';
+import TagsPage from '../pages/UserPages/TagsPage.vue';
+import UsersPage from '../pages/UserPages/UsersPage.vue';
+import NewQuesPage from '../pages/UserPages/NewQuesPage.vue';
+import MyQuesPage from '../pages/UserPages/MyQuesPage.vue';
 
 //保存原来的push|replace方法
 var originPush = VueRouter.prototype.push;

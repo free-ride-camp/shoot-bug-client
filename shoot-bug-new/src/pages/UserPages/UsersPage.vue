@@ -40,9 +40,9 @@
 </template>
 
 <script>
-import UserCard from "../components/UserCard.vue";
-import SearchBar from "../components/SearchBar.vue";
-import SelectorGroup from "../components/SelectorGroup.vue";
+import UserCard from "../../components/UserCard.vue";
+import SearchBar from "../../components/SearchBar.vue";
+import SelectorGroup from "../../components/SelectorGroup.vue";
 
 export default {
   name: "UsersPage",
@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      avatar: require("../assets/avatars/0.jpg"),
+      avatar: require("../../assets/avatars/0.jpg"),
       tags: ["javascript", "dom", "jquery"],
       group:['按声望','最新的','按国家']
     };

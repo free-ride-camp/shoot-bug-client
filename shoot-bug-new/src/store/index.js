@@ -1,27 +1,18 @@
-import Vuex from 'vuex';
-import Vue from 'vue';
+import Vuex from "vuex";
+import Vue from "vue";
+import auditor from "./auditor";
+import user from "./user";
+import root from "./root";
+import userInfo from './userInfo';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
+//参考尚品汇P19，已分模块
 
 export default new Vuex.Store({
-  state:{
-    login:false,
-    register:false,
-    userInfo:{
-      id:0,
-      name:'',
-      role:'',
-      avatar_url:'',
-      jwt:'',
-      email:'',
-      gender:'',
-      age:0,
-      city:'',
-      experience:0,
-      field:''
-    }
+  modules: {
+    user,
+    auditor,
+    root,
+    userInfo
   },
-  mutations:{
-    
-  }
-})
+});

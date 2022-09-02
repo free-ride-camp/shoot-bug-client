@@ -45,7 +45,7 @@
               <div class="meta-user-card">
                 <div class="meta-who">
                   <img
-                    src="../assets/avatars/0.jpg"
+                    src="../../assets/avatars/0.jpg"
                     alt=""
                     width="12px"
                     height="12px"
@@ -99,7 +99,7 @@
               <div class="meta-user-card">
                 <div class="meta-who">
                   <img
-                    src="../assets/avatars/0.jpg"
+                    src="../../assets/avatars/0.jpg"
                     alt=""
                     width="12px"
                     height="12px"
@@ -152,7 +152,7 @@
               <div class="meta-user-card">
                 <div class="meta-who">
                   <img
-                    src="../assets/avatars/0.jpg"
+                    src="../../assets/avatars/0.jpg"
                     alt=""
                     width="12px"
                     height="12px"
@@ -186,7 +186,7 @@
 </template>
 
 <script>
-import SearchBar from '../components/SearchBar.vue';
+import SearchBar from '../../components/SearchBar.vue';
 
 export default {
   name: "HistoryPage",

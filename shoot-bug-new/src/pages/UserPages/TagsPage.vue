@@ -31,9 +31,9 @@
 </template>
 
 <script>
-import SearchBar from '../components/SearchBar.vue';
-import SelectorGroup from '../components/SelectorGroup.vue';
-import TagCard from '../components/TagCard.vue';
+import SearchBar from '../../components/SearchBar.vue';
+import SelectorGroup from '../../components/SelectorGroup.vue';
+import TagCard from '../../components/TagCard.vue';
 //sof上的一些细节
 //当整体页面宽度变化时，grid布局会响应变化来自适应，目前还没实现
 export default {
