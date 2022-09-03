@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import tools from '../common/tools';
 import Refresh from "@/pages/Refresh";
 import QuesPage from '../pages/UserPages/QuesPage.vue';
 import TagsPage from '../pages/UserPages/TagsPage.vue';
@@ -68,5 +69,20 @@ const router = new VueRouter({
     }
   ],
 });
+
+router.beforeEach(async (to,from,next)=>{
+  //需要登录权限的路由组件
+  const needLoginPaths = new Set(['/new','/myquestions'])
+  if (needLoginPaths.has(to.path)) {
+    //如果当前用户处于未登录状态
+    if (!tools.getCookie('user_id')) {
+      //阻止跳转，弹出登录框
+      Vue.prototype.$bus.$emit('modalLogin')
+      return false
+    }
+  }
+
+  next()
+})
 
 export default router;

@@ -6,6 +6,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import store from '@/store';
 import request from '@/common/request';
 import SearchBar from "./components/SearchBar.vue";
+import './mock/server';
 
 Vue.config.productionTip = false
 

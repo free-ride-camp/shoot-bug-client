@@ -19,19 +19,52 @@
       </div>
       <div class="header-content">
         <div class="header-user">
-          <div v-if="logined"></div>
-          <div v-else @click="$bus.$emit('modalLogin')">
-            <el-popover
-              placement="bottom-start"
-              title="点击头像登录"
-              width="200"
-              trigger="hover"
-            >
-              <el-avatar class="null-avatar" slot="reference">
-                <i class="el-icon-user-solid" style="font-size: 12px"></i>
-              </el-avatar>
-              <slot> 如果您还没有注册，请点<a class="to-register" @click="$bus.$emit('modalRegister')">这里</a> </slot>
-            </el-popover>
+          <div style="flex-basis: 32px">
+            <div v-if="logined">
+              <el-popover
+                placement="bottom-start"
+                :title="$store.getters.name"
+                width="200"
+                trigger="hover"
+              >
+                <el-avatar
+                  class="null-avatar"
+                  slot="reference"
+                  :src="$store.getters.avatar"
+                >
+                  <i class="el-icon-loading" style="font-size: 16px"></i>
+                </el-avatar>
+                <slot>
+                  <div>声望值：0</div>
+                  <div>徽章数：0</div>
+                  <div>
+                    <a class="logout-link" @click="logOut">退出登录</a>
+                  </div>
+                </slot>
+              </el-popover>
+            </div>
+            <div v-else @click="$bus.$emit('modalLogin')">
+              <el-popover
+                placement="bottom-start"
+                title="点击头像登录"
+                width="200"
+                trigger="hover"
+              >
+                <el-avatar class="null-avatar" slot="reference">
+                  <i class="el-icon-user-solid" style="font-size: 12px"></i>
+                </el-avatar>
+                <slot>
+                  如果您还没有注册，请点<a
+                    class="to-register"
+                    @click="$bus.$emit('modalRegister')"
+                    >这里</a
+                  >
+                </slot>
+              </el-popover>
+            </div>
+          </div>
+          <div class="user-name" @click="seeMeOrLogin" ref="user-name">
+              {{userName|subName}}
           </div>
         </div>
 
@@ -73,13 +106,15 @@
 </template>
 
 <script>
+import tools from '../common/tools';
+
 export default {
   name: "SBHeader",
   data() {
     return {
       logined: false,
       mode: "day",
-    }
+    };
   },
   methods: {
     addOutLine() {
@@ -94,6 +129,34 @@ export default {
       } else if (this.mode === "night") {
         this.mode = "day";
       }
+    },
+    logOut(){
+      //清除仓库数据
+      this.$store.commit('clearUserInfo')
+      //清除cookie用户数据
+      tools.removeCookie('user_id')
+      tools.removeCookie('role')
+      tools.removeCookie('jwt')
+      //更新header中的头像和名字
+      this.$bus.$emit('logouted')
+    },
+    seeMeOrLogin(){
+      const userName = this.$refs['user-name'].innerText
+      if (userName === "未登录") {
+        this.$bus.$emit('modalLogin')
+        return
+      }
+      else{
+
+      }
+    }
+  },
+  computed: {
+    userName(){
+      if(this.$store.getters.name === ''){
+        return '未登录'
+      }
+      return this.$store.getters.name
     }
   },
   watch: {
@@ -107,6 +170,25 @@ export default {
         style.setProperty("--mode-front-color", "var(--night-color)");
       }
     },
+  },
+  mounted() {
+    this.$bus.$on("logined", () => {
+      this.logined = true;
+    });
+    this.$bus.$on("logouted", () => {
+      this.logined = false;
+    });
+  },
+  filters:{
+    subName(value){
+      if (!value) {
+        return ''
+      }
+      if (value.length > 6) {
+        return value.substr(0,6) + '...'
+      }
+      return value
+    }
   }
 };
 </script>
@@ -170,6 +252,15 @@ export default {
   margin-left: 4px;
 }
 
+.user-name{
+  flex: 1;
+  padding-left: 6px;
+  font-size: 14px;
+  color: black;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
 .content-item {
   flex: 1;
   display: flex;
@@ -204,8 +295,13 @@ export default {
   box-shadow: 1px 1px 8px #c0c0c0, -1px -1px 8px #c0c0c0;
 }
 
-.to-register:hover{
+.to-register:hover {
   cursor: pointer;
   color: cornflowerblue;
+}
+
+.logout-link:hover{
+  color: darkblue;
+  cursor: pointer;
 }
 </style>

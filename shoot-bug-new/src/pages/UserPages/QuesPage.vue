@@ -13,15 +13,15 @@
         <div class="post-item">
           <div class="post-summary-status">
             <div class="post-summary-status-item">
-              <span class="post-summary-status-item-number">0</span>
+              <span class="post-summary-status-item-number">0</span>&nbsp;
               <span class="post-summary-status-item-unit">投票</span>
             </div>
             <div class="post-summary-status-item">
-              <span class="post-summary-status-item-number">0</span>
+              <span class="post-summary-status-item-number">0</span>&nbsp;
               <span class="post-summary-status-item-unit">回答</span>
             </div>
             <div class="post-summary-status-item">
-              <span class="post-summary-status-item-number">0</span>
+              <span class="post-summary-status-item-number">0</span>&nbsp;
               <span class="post-summary-status-item-unit">浏览</span>
             </div>
           </div>
@@ -63,15 +63,15 @@
         <div class="post-item">
           <div class="post-summary-status">
             <div class="post-summary-status-item">
-              <span class="post-summary-status-item-number">0</span>
+              <span class="post-summary-status-item-number">0</span>&nbsp;
               <span class="post-summary-status-item-unit">投票</span>
             </div>
             <div class="post-summary-status-item">
-              <span class="post-summary-status-item-number">0</span>
+              <span class="post-summary-status-item-number">0</span>&nbsp;
               <span class="post-summary-status-item-unit">回答</span>
             </div>
             <div class="post-summary-status-item">
-              <span class="post-summary-status-item-number">0</span>
+              <span class="post-summary-status-item-number">0</span>&nbsp;
               <span class="post-summary-status-item-unit">浏览</span>
             </div>
           </div>
@@ -113,15 +113,15 @@
         <div class="post-item">
           <div class="post-summary-status">
             <div class="post-summary-status-item">
-              <span class="post-summary-status-item-number">0</span>
+              <span class="post-summary-status-item-number">0</span>&nbsp;
               <span class="post-summary-status-item-unit">投票</span>
             </div>
             <div class="post-summary-status-item">
-              <span class="post-summary-status-item-number">0</span>
+              <span class="post-summary-status-item-number">0</span>&nbsp;
               <span class="post-summary-status-item-unit">回答</span>
             </div>
             <div class="post-summary-status-item">
-              <span class="post-summary-status-item-number">0</span>
+              <span class="post-summary-status-item-number">0</span>&nbsp;
               <span class="post-summary-status-item-unit">浏览</span>
             </div>
           </div>
@@ -333,6 +333,7 @@ export default {
     margin-bottom: 12px;
     color: var(--mode-front-color);
     font-size: 12px;
+    line-height: 16px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;

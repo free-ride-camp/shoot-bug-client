@@ -403,6 +403,7 @@ export default {
   box-sizing: border-box;
   overflow-x: auto;
   position: relative;
+  overscroll-behavior: contain;
 }
 
 .wrapper {

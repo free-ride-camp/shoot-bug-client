@@ -11,8 +11,8 @@
       size="small"
       label-position="left"
     >
-      <el-form-item label="昵称" prop="name">
-        <el-input v-model="info.name" />
+      <el-form-item label="昵称" prop="user_name">
+        <el-input v-model="info.user_name" />
       </el-form-item>
 
       <el-form-item label="密码" prop="pwd">
@@ -61,6 +61,9 @@
 </template>
 
 <script>
+import tools from '../common/tools';
+import config from '../common/config';
+
 export default {
   name: "Register",
   data() {
@@ -105,17 +108,17 @@ export default {
     }
 
     return {
-      secends:null,
+      secends:60,
       info: {
-        name: "",
-        pwd: "",
-        pwd2: "",
-        phone: "",
-        email: "",
-        code:""
+        user_name: "张三是煞笔",
+        pwd: "hlz123456",
+        pwd2: "hlz123456",
+        phone: "13515773333",
+        email: "hlz123@qq.com",
+        code:"1684"
       },
       rules: {
-        name: [
+        user_name: [
           { required: true, message: "请输入昵称", trigger: "blur" },
           {
             min: 4,
@@ -150,7 +153,46 @@ export default {
     };
   },
   methods: {
-    register() {},
+    register() {
+      if (!this.agreed) {
+        this.err_msg = "请同意shoot-bug相关协议！"
+        return
+      }
+      //userInfo为删除pwd2属性后的info
+      const {pwd2,...userInfo} = this.info
+      this.$addr.post('/register',userInfo)
+      .then((result) => {
+        if (result.status === 200) {
+          console.log('res',result.data);
+              //登录成功，记录用户信息到仓库中
+              this.$store.commit("setUserInfo", result.data);
+              //记录用户个人的关键信息到cookie中，维持7天
+              tools.setCookie(
+                "user_id",
+                this.$store.getters.id,
+                config.cookieMaintainDays
+              );
+              tools.setCookie(
+                "role",
+                this.$store.getters.role,
+                config.cookieMaintainDays
+              );
+              tools.setCookie(
+                "jwt",
+                this.$store.getters.jwt,
+                config.cookieMaintainDays
+              );
+              //关闭登录框，更新header中的头像和名字
+              this.$bus.$emit("modalHide");
+              this.$bus.$emit("logined");
+        }else{
+          this.err_msg = "服务器内部错误，请联系开发人员"
+          throw new Error(`error status:${result.status}`)
+        }
+      }).catch((err) => {
+        console.error(err)
+      });
+    },
     getCode(){}
   },
 };
@@ -228,7 +270,7 @@ export default {
 
 .verify-btn{
     height: 30px;
-    width: 80%;
+    width: 95%;
     box-sizing: border-box;
     margin: 2px 4px;
 }

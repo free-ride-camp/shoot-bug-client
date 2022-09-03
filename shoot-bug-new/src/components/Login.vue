@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="header">登 录</div>
-    <hr style="width:100%">
+    <hr style="width: 100%" />
     <div class="inputs">
       <ValidationProvider rules="required|email" v-slot="{ errors }">
         <el-input
@@ -13,13 +13,17 @@
         <span class="err-msg">{{ errors[0] }}</span>
       </ValidationProvider>
 
-      <ValidationProvider rules="required|pwd_len:8,15|pwd_normal|pwd_num_mix_letter" v-slot="{ errors }">
+      <ValidationProvider
+        rules="required|pwd_len:8,15|pwd_normal|pwd_num_mix_letter"
+        v-slot="{ errors }"
+      >
         <el-input
-        placeholder="请输入密码"
-        v-model="password"
-        show-password
-        class="input"
-      ></el-input>
+          placeholder="请输入密码"
+          v-model="password"
+          show-password
+          class="input"
+          @keyup.enter.native="login"
+        ></el-input>
         <span class="err-msg">{{ errors[0] }}</span>
       </ValidationProvider>
 
@@ -28,7 +32,9 @@
 
     <button class="login-area login" @click="login">登录</button>
     <div class="extends">
-      <a href="#" style="float: left" @click="$bus.$emit('modalRegister')">我要注册</a>
+      <a href="#" style="float: left" @click="$bus.$emit('modalRegister')"
+        >我要注册</a
+      >
       <a href="#" style="float: right">找回密码</a>
     </div>
   </div>
@@ -36,6 +42,8 @@
 
 <script>
 import { ValidationProvider, extend } from "vee-validate";
+import tools from "../common/tools";
+import config from "../common/config";
 
 extend("email", {
   validate(value) {
@@ -46,41 +54,41 @@ extend("email", {
   message: "邮箱格式不正确!",
 });
 
-extend('required', {
+extend("required", {
   validate(value) {
     return {
       required: true,
-      valid: ['', null, undefined].indexOf(value) === -1
+      valid: ["", null, undefined].indexOf(value) === -1,
     };
   },
   computesRequired: true,
-  message:'该字段不能为空！'
+  message: "该字段不能为空！",
 });
 
-extend('pwd_len',{
-    validate(value,{min,max}){
-        return value.length >= min && value.length <= max
-    },
-    params:['min','max'],
-    message:`密码长度必须在{min}和{max}之间！`
-})
+extend("pwd_len", {
+  validate(value, { min, max }) {
+    return value.length >= min && value.length <= max;
+  },
+  params: ["min", "max"],
+  message: `密码长度必须在{min}和{max}之间！`,
+});
 
-extend('pwd_normal',{
-    validate(value){
-        const regex = /^\w+$/;
-        return regex.test(value)
-    },
-    message:'密码字符必须是字母，数字或者下划线！'
-})
+extend("pwd_normal", {
+  validate(value) {
+    const regex = /^\w+$/;
+    return regex.test(value);
+  },
+  message: "密码字符必须是字母，数字或者下划线！",
+});
 
-extend('pwd_num_mix_letter',{
-    validate(value){
-        const numRegex = /[0-9]+/g;
-        const letterRegex = /[a-zA-Z]+/g;
-        return numRegex.test(value) && letterRegex.test(value)
-    },
-    message:'必须同时含有数字和字母！'
-})
+extend("pwd_num_mix_letter", {
+  validate(value) {
+    const numRegex = /[0-9]+/g;
+    const letterRegex = /[a-zA-Z]+/g;
+    return numRegex.test(value) && letterRegex.test(value);
+  },
+  message: "必须同时含有数字和字母！",
+});
 
 export default {
   name: "Login",
@@ -95,7 +103,49 @@ export default {
     };
   },
   methods: {
-    login() {},
+    login() {
+      this.$addr
+        .post("/login", {
+          email: this.email,
+          password: this.password,
+        })
+        .then((result) => {
+          // console.log("response", result);
+          if (result.status === 200) {
+            if (result.data.err_msg === "") {
+              //登录成功，记录用户信息到仓库中
+              this.$store.commit("setUserInfo", result.data);
+              //记录用户个人的关键信息到cookie中，维持7天
+              tools.setCookie(
+                "user_id",
+                this.$store.getters.id,
+                config.cookieMaintainDays
+              );
+              tools.setCookie(
+                "role",
+                this.$store.getters.role,
+                config.cookieMaintainDays
+              );
+              tools.setCookie(
+                "jwt",
+                this.$store.getters.jwt,
+                config.cookieMaintainDays
+              );
+              //关闭登录框，更新header中的头像和名字
+              this.$bus.$emit("modalHide");
+              this.$bus.$emit("logined");
+            } else {
+              this.err_msg = result.err_msg;
+            }
+          } else {
+            this.err_msg = "服务器内部错误，请联系开发人员";
+            throw new Error(`error status:${result.status}`);
+          }
+        })
+        .catch((err) => {
+          console.err(err);
+        });
+    },
     showRegister() {},
   },
 };

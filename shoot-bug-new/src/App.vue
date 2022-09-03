@@ -12,27 +12,27 @@
         </div>
         <el-menu
           class="aside-container"
-          default-active="questions"
+          :default-active="activeIndex"
           background-color="var(--mode-bg-color)"
-          router
+          @select="selectRoute"
         >
-          <el-menu-item index="questions">
+          <el-menu-item index="/questions">
             <i class="el-icon-reading"></i>
             <span slot="title">问题</span>
           </el-menu-item>
-          <el-menu-item index="tags">
+          <el-menu-item index="/tags">
             <i class="el-icon-collection-tag"></i>
             <span slot="title">标签</span>
           </el-menu-item>
-          <el-menu-item index="users">
+          <el-menu-item index="/users">
             <i class="el-icon-user"></i>
             <span slot="title">用户</span>
           </el-menu-item>
-          <el-menu-item index="myquestions">
+          <el-menu-item index="/myquestions">
             <i class="el-icon-finished"></i>
             <span slot="title">我的问题</span>
           </el-menu-item>
-          <el-menu-item index="history">
+          <el-menu-item index="/history">
             <i class="el-icon-time"></i>
             <span slot="title">历史记录</span>
           </el-menu-item>
@@ -63,12 +63,17 @@ export default {
   data() {
     return {
       modal:false,
-      loginEntry:'Login'
+      loginEntry:'Login',
+      activeIndex:"/questions"
     };
   },
   methods: {
     newQuestion(){
       this.$router.push('/new')
+    },
+    selectRoute(index){
+      this.activeIndex = index
+      this.$router.push(index)
     }
   },
   
@@ -88,7 +93,7 @@ export default {
      this.$bus.$on('modalHide',()=>{
       this.modal = false
     })
-  },
+  }
 };
 </script>
 
